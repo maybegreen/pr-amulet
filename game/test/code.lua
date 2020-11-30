@@ -1,3 +1,4 @@
+local grid = require "grid"
 local w = am.window({
       title = "RogueTest",
       width = 400,
@@ -42,5 +43,5 @@ p:action(function(p)
 attach(p)
 
 
-grid:init(16)
+grid:init(w, 16)
 attach(grid.node)
