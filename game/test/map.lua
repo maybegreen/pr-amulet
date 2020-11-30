@@ -19,27 +19,28 @@ local function detach(s)
   w.scene = w.scene:remove(s)
 end
 
-
 local map = {
-  node = am.translate(0,0) ,
-  data = {},
   name = "Test",
   width = 400,
-  height = 400
+  height = 400,
+  data = {},
+  ts = 16, --tile size
+  node = am.translate(0,0),
 }
-map.sym = { ["W"] = W, ["G"] = G }
+
+map.tiles = {
+    W = am.rect(0,0,map.ts,map.ts, vec4(.2,.5,.8,1)),
+    G = am.rect(0,0,map.ts,map.ts, vec4(.2,.7,.3,1))
+  }
+
+map.sym = { ["W"] = map.tiles.W, ["G"] = map.tiles.G }
+
 
 function map:add (a, p)
-  self:append(
-  am.group()
-  ^ {am.translate(p) ^ a})
+  self.node:append(am.translate(p) ^ a)
 end
 
-local W = am.rect(0,0,16,16, vec4(.2,.5,.8,1))
-local G = am.rect(0,0,16,16, vec4(.2,.7,.3,1))
-
 function map:init()
-  local x, y = 0, 0
   map.data =
   [[
   W W W W W W
@@ -66,33 +67,10 @@ function map:redraw()
   end
 end
 
-
--- function map:fill(t)
---    for i = -w.width, w.width, 16 do
---       for j = -w.height, w.height, 16 do
---          self:add(t, vec2(i, j))
---       end
---    end
--- end
-
-function map:fill(t)
-  local y = 0
-  for i=1, w.width/16 * w.height/16, 1 do
-
-    self.data = self.data .. t
-  end
-end
-
-local isle = [[
-GGGG
-GGGG
-GGGG
-]]
-
 map:init()
-map:fill("W")
+
 map:redraw()
---map:add(isle, vec2(0, 0))
+
 grid:init(w, 16)
 w.scene = am.translate(0, 0)
 local look = {
