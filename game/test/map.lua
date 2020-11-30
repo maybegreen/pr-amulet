@@ -1,17 +1,20 @@
-local grid = require "grid"
-local utils = require "utils"
+--local grid = require "grid"
+--local utils = require "utils"
 
-local w = am.window({
-  title = "MapTest",
-  width = 400,
-  height = 400
-})
+-- local w = am.window({
+--   title = "MapTest",
+-- width = 400,
+--   height = 400
+-- })
+
+-- w.scene = am.scale(1, 1)
 
 local function attach(s)
   if w.scene == nil then
-    w.scene = s
+    w.scene = am.group{s}
   else
-    w.scene = w.scene:append(s)
+    local n = am.group{s}
+    w.scene = w.scene:append(n)
   end
 end
 
@@ -25,7 +28,7 @@ local map = {
   height = 400,
   data = {},
   ts = 16, --tile size
-  node = am.translate(0,0),
+  nodes = am.translate(0, 0)
 }
 
 map.tiles = {
@@ -35,13 +38,8 @@ map.tiles = {
 
 map.sym = { ["W"] = map.tiles.W, ["G"] = map.tiles.G }
 
-
-function map:add (a, p)
-  self.node:append(am.translate(p) ^ a)
-end
-
 function map:init()
-  map.data =
+  self.data =
   [[
   W W W W W W
   W G G G G W
@@ -58,7 +56,7 @@ function map:make()
     for w in string.gmatch(s, "(%a+)") do
       for k, v in pairs(map.sym) do
         if w == k then
-          self:add(v, vec2(x, y))
+          self.nodes:append(am.translate(vec2(x, y)) ^ v)
         end
       end
       x = x + 16
@@ -69,23 +67,31 @@ function map:make()
 end
 
 map:init()
-
 map:make()
-
-grid:init(w, 16)
-w.scene = am.translate(0, 0)
+local ts = 16
 local look = {
-  ["left"] = vec2(16, 0),
-  ["right"] = vec2(-16, 0),
-  ["up"] = vec2(0, -16),
-  ["down"] = vec2(0, 16)}
+  ["left"]  = vec2( ts, 0),
+  ["right"] = vec2(-ts, 0),
+  ["up"]    = vec2(0, -ts),
+  ["down"]  = vec2(0,  ts)
+}
 
+local zoom = {
+  ["kp_plus"]  =  .25,
+  ["kp_minus"] = -.25
+}
   w.scene:action(function(self)
     for k,v in pairs(look) do
       if w:key_pressed(k) then
-        self.position2d = self.position2d + v
+        self"translate".position2d = self"translate".position2d + v
+      end
+    end
+    for k,v in pairs(zoom) do
+      if w:key_pressed(k) then
+        --log("scale: " .. self.scale2d)
+        self.scale2d = math.clamp(self.scale2d + v, 0.1, 10)
       end
     end
   end)
-  attach(map.node)
-  attach(grid.node)
+
+  attach(map.nodes)
