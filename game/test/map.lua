@@ -47,11 +47,12 @@ function map:init()
   W G G G G W
   W G G G G W
   W G G G G W
+  W G G G G W
   W W W W W W
   ]]
 end
 
-function map:redraw()
+function map:make()
   local x, y = 0, 0
   for s in string.gmatch(self.data,"[^\r\n]+") do
     for w in string.gmatch(s, "(%a+)") do
@@ -69,7 +70,7 @@ end
 
 map:init()
 
-map:redraw()
+map:make()
 
 grid:init(w, 16)
 w.scene = am.translate(0, 0)
