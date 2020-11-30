@@ -1,0 +1,2 @@
+local ship =
+   am.translate:tag"ship-p"

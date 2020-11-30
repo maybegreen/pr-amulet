@@ -1,0 +1,44 @@
+local w_ = require "window"
+local st = require "lib.statemachine"
+local in_ = require "input"
+
+local gs = st.create({
+      events  = {
+         { name = 'start', from = "none", to = "menu" },
+         { name = 'play',  from = "menu", to = "game" },
+         { name = 'quit',  from = "game", to = "menu" }
+}})
+
+gs.onstatechange = function (self, event, from, to)
+   log("<Game> Changing state from: " .. from .. " to: " .. to)
+end
+
+gs.onplay = function (self, event, from, to)
+   local _s =
+      am.translate(0,0)
+      ^ am.circle(vec2(0,0), 20, vec4(.2, .5, .6, 1))
+   _s.kmap = {"escape"}
+   _s.kfun = {function () gs:quit() end}
+
+   w_.scene = _s
+   w_.scene:action(in_.hdl)
+end
+
+gs.onmenu = function (self, event, from, to)
+   local _s =
+      am.translate(20, 20)
+      ^ am.scale(2):tag"play.sc"
+      ^ am.rect(-50, -50, 50, 50)
+      ^ am.text("Press Enter")
+   
+   _s.kmap  = {"escape", "enter"}
+   _s.kfun  = {
+      function () w_:close() end,
+      function () gs:play()  end
+   }
+   w_.scene = _s
+
+   w_.scene:action(in_.hdl)
+end
+
+return gs

@@ -1,0 +1,13 @@
+local win = require "window"
+local M = {}
+
+M.hdl = function (_s)
+   for i, v in ipairs(_s.kmap)
+   do
+      if win:key_down(v) then
+         _s.kfun[i]()
+      end
+   end
+end
+
+return M

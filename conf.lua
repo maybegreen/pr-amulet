@@ -1,0 +1,7 @@
+title = "Project"
+author = "ys"
+shortname = "project"
+version = "1.0.0"
+support_email = "Youssef.SAHLI@etu.uca.fr"
+copyright_message = "Copyright ® 2020 SAHLI Youssef"
+dev_region = "en"

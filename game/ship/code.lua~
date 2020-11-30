@@ -1,0 +1,4 @@
+local ship =
+   am.translate(0, 0):tag"ship-p"
+   ^ am.scale(3)
+   ^ am.sprite"ship.png"
