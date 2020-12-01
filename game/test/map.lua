@@ -9,7 +9,7 @@ local map = {
 }
 
 function map:make(path)
-  self.data = loadfile(path)
+  self.data = require(path)
   local x, y = 0, 0
   for s in string.gmatch(self.data,"[^\r\n]+") do
     for w in string.gmatch(s, "(%a+)") do

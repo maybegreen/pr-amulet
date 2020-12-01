@@ -15,7 +15,7 @@ local tiles = {
 
   map.sym = { ["W"] = tiles.W, ["G"] = tiles.G }
 
-map:make("01.lua")
+map:make("01")
 
 local moves = {
    ["y"] = vec2(-1, 1), ["k"] = vec2(0, 1), ["u"] = vec2(1,1),
