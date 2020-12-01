@@ -39,9 +39,7 @@ end)
 
 
 function p:move(d)
-
   self.position2d = self.position2d + d
-
 end
 
 p:append(am.translate(8,8) ^ am.text("@"))
