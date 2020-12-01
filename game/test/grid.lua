@@ -1,7 +1,8 @@
+local w = require "graphics"
 local M = {}
 
 local M = {}
-function M:init(w, s)
+function M:init(s)
    local A = {}
    local B = {}
    local C = {}

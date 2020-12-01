@@ -4,8 +4,12 @@ local map = require "map"
 local w = require "graphics"
 local p = require "player"
 
+w:init()
+map:fill("W")
 map:make("entry")
-grid:init(w, 16)
-utils.attach(w, map.nodes)
-utils.attach(w, grid.node)
-utils.attach(w, p.node)
+map:bind()
+grid:init(w.ts)
+utils.attach(map.nodes)
+
+utils.attach(grid.node)
+utils.attach(p.node)

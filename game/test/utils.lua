@@ -1,6 +1,7 @@
+local w = require "graphics"
 local M = {}
 
-function M.attach(w, s)
+function M.attach(s)
   if w.scene == nil then
     w.scene = am.group{s}
   else
@@ -9,7 +10,7 @@ function M.attach(w, s)
   end
 end
 
-function M.detach(w, s)
+function M.detach(s)
   if s == nil or w.scene == nil then return
   else
     w.scene = w.scene:remove(s)

@@ -7,10 +7,8 @@ local moves = {
    ["b"] = vec2(-1,-1), ["j"] = vec2(0,-1), ["n"] = vec2(1,-1)
 }
 
-M.node = am.translate(0,0)
+M.node = am.translate(0,0):tag"player" ^ w.player
 M.node:action(function(p)
-      if w:key_pressed("escape") then
-         w:close() end
       for _,v in pairs(moves) do
          if w:key_pressed(_) then
             p:move(v * 16) end
