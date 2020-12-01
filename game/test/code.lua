@@ -13,9 +13,13 @@ local tiles = {
     G = am.rect(0,0,map.ts,map.ts, vec4(.2,.7,.3,1))
   }
 
-  map.sym = { ["W"] = tiles.W, ["G"] = tiles.G }
+  map.sym = {
+    ["W"] = tiles.W,
+    ["G"] = tiles.G,
+    ["@"] = tiles.Start
+   }
 
-map:make("01")
+map:make("entry")
 
 local moves = {
    ["y"] = vec2(-1, 1), ["k"] = vec2(0, 1), ["u"] = vec2(1,1),
@@ -29,15 +33,15 @@ p:action(function(p)
          w:close() end
       for _,v in pairs(moves) do
          if w:key_pressed(_) then
-            p:move(v) end
+            p:move(v*map.ts) end
       end
 end)
 
 
 function p:move(d)
-   for k,v in pairs(moves) do
-      self.position2d = self.position2d + d
-   end
+
+  self.position2d = self.position2d + d
+
 end
 
 p:append(am.translate(8,8) ^ am.text("@"))
@@ -45,5 +49,7 @@ p:action(function(p)
       p"text".text = "@" .. p.position2d end)
 
 grid:init(w, 16)
+
 utils.attach(w, map.nodes)
 utils.attach(w, grid.node)
+utils.attach(w, p)
