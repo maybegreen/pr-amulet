@@ -1,14 +1,20 @@
-
+local w = require "graphics"
 local map = {
   data = {},
   ts = 16, --tile size
   nodes = am.translate(0, 0)
 }
 
+map.sym = {
+  ["W"] = w.W,
+  ["G"] = w.G,
+  ["@"] = w.Start
+ }
+
 function map:make(path)
   local s = require(path)
   self.data = s.data
-  assert(self.data ~= nil, "Problem loading map:" .. s.name)
+
   local x, y = 0, 0
   for s in string.gmatch(self.data,"[^\r\n]+") do
     for w in string.gmatch(s, "(%a+)") do

@@ -1,9 +1,5 @@
 local M = {}
 
-function M.stringinsert(str1, str2, pos)
-    return string.sub(str1,1,pos)..str2..string.sub(str1, pos+1)
-end
-
 function M.attach(w, s)
   if w.scene == nil then
     w.scene = am.group{s}
