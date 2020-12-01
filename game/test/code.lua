@@ -1,17 +1,21 @@
 local grid = require "grid"
+local utils = require "utils"
+local map = require "map"
+
 local w = am.window({
       title = "RogueTest",
       width = 400,
       height = 400
 })
 
-local function attach(s)
-   if w.scene == nil then
-      w.scene = s
-   else
-      w.scene = w.scene:append(s)
-   end
-end
+local tiles = {
+    W = am.rect(0,0,map.ts,map.ts, vec4(.2,.5,.8,1)),
+    G = am.rect(0,0,map.ts,map.ts, vec4(.2,.7,.3,1))
+  }
+
+  map.sym = { ["W"] = tiles.W, ["G"] = tiles.G }
+
+map:make("01.lua")
 
 local moves = {
    ["y"] = vec2(-1, 1), ["k"] = vec2(0, 1), ["u"] = vec2(1,1),
@@ -40,8 +44,6 @@ p:append(am.translate(8,8) ^ am.text("@"))
 p:action(function(p)
       p"text".text = "@" .. p.position2d end)
 
-attach(p)
-
-
 grid:init(w, 16)
-attach(grid.node)
+utils.attach(w, map.nodes)
+utils.attach(w, grid.node)
