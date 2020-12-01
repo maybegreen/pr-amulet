@@ -1,8 +1,5 @@
 
 local map = {
-  name = "Test",
-  width = 400,
-  height = 400,
   data = {},
   ts = 16, --tile size
   nodes = am.translate(0, 0)
