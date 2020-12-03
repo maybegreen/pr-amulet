@@ -37,7 +37,7 @@
 ;; Code:
 
 
-(defconst amulet-minor-mode-version-number "1.0"
+(defconst amulet-minor-mode-version-number "1.1"
   "The version number of the Amulet minor mode.")
 
 (defvar amulet-minor-mode-map
@@ -66,16 +66,17 @@
   :group `amulet)
 
 (defun amulet/launch ()
-  "Launch Amulet."
+  "Launch Amulet and print the output in a popup."
   (interactive)
   (save-buffer)
   (if (get-buffer "*amulet-output*")
-      (kill-buffer "*amulet-output*"))
-  (message (concat amulet-path " " (buffer-name))
-  (call-process amulet-path nil "*amulet-output*" t
-                (buffer-name))
-  (display-buffer "*amulet-output*" nil)))
-
+      (display-buffer "*amulet-output*")
+  (call-process amulet-path nil "*amulet-output*" nil
+                (concat (file-name-directory
+                         (buffer-file-name
+                          (window-buffer (previous-window)) ) )
+                        "code.lua") ) ) )
+     
 (provide `amulet)
 
 ;;; amulet.el ends here

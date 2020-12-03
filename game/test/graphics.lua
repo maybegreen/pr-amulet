@@ -1,7 +1,7 @@
 local w = am.window({
       title = "RogueTest",
-      width = 400,
-      height = 400
+      width = 800,
+      height = 800
 })
 local size = 16
 

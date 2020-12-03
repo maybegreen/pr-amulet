@@ -14,8 +14,8 @@ map.sym = {
  function map:fill(t)
    for k, v in pairs(map.sym) do
      if t == k then
-       for y = -w.height, w.height*2/w.ts, 16 do
-         for x = -w.width, w.width*2/w.ts, 16 do
+       for y = -w.height, w.height, 16 do
+         for x = -w.width, w.width, 16 do
            self.nodes:append(am.translate(vec2(x, y)) ^ v)
          end
        end
