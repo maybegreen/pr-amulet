@@ -5,7 +5,7 @@ function M.attach(s)
   if w.scene == nil then
     w.scene = am.group{s}
   else
-    local n = am.group{s}
+    local n = am.group(s)
     w.scene = w.scene:append(n)
   end
 end

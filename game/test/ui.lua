@@ -10,7 +10,6 @@ function ui:init(p)
   self.node:action(function(self)
     self"text".text = "Blah"
   end)
-  w.scene = self.node
 end
 
 return ui

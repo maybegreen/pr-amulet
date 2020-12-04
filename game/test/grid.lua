@@ -1,4 +1,5 @@
 local w = require "graphics"
+local db= require "debug"
 local M = {}
 
 local M = {}
@@ -16,10 +17,6 @@ function M:init(s, tckn, cl)
     V[d] = vec2(x, -w.height)
     d = d + 1
   end
-  print("log")
-  print(#H + #V .. " grid points")
-  print("H\n", unpack(H))
-  print("V\n", unpack(V))
 
   self.glines = am.translate(0, 0)
   self.thickness = tckn
