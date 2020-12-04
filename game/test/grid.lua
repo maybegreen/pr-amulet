@@ -2,32 +2,34 @@ local w = require "graphics"
 local M = {}
 
 local M = {}
-function M:init(s)
-   local A = {}
-   local B = {}
-   local C = {}
-   local D = {}
-   -- on y = w.height, from x = 0 to x = w.width
-   local c = 0
-   for x = -w.width, w.width, s do
-      A[c] = vec2(x, w.height)
-      B[c] = vec2(x, -w.height)
-      c = c + 1   end
-   c = 0
-   for y = -w.height, w.height, s do
-      C[c] = vec2(w.height, y)
-      D[c] = vec2(-w.height, y)
-      c = c + 1
-   end
-   M.l = am.translate(0, 0)
-   M.k = am.translate(0, 0)
-   M.thickness = 1
-   M.color = vec4(.1, .1, .1, 1)
-   for i, v in ipairs(A) do
-      M.l:append(am.line(A[i], B[i], M.thickness, M.color)) end
-   for i, v in ipairs(B) do
-      M.k:append(am.line(C[i], D[i], M.thickness, M.color)) end
-   M.node = am.group() ^ { M.l, M.k }
+function M:init(s, tckn, cl)
+  local V = {} --vertical lines
+  local H = {} -- horizontal lines
+  -- from y = -w.height to w.height,
+  --from x = -w.width to x = w.width and step = s = 16
+  local c, d = 1, 1 --index count
+  for y = -w.height, w.height, s do
+    H[c]= vec2(-w.width, y)
+    c = c + 1
+  end
+  for x = -w.width, w.width, s do
+    V[d] = vec2(x, -w.height)
+    d = d + 1
+  end
+  print("log")
+  print(#H + #V .. " grid points")
+  print("H\n", unpack(H))
+  print("V\n", unpack(V))
+
+  self.glines = am.translate(0, 0)
+  self.thickness = tckn
+  self.color = cl
+  for i, v in ipairs(H) do
+    local hline = am.line(v, v{x = -v.x}, self.thickness, self.color)
+    local vline = am.line(V[i], V[i]{y = -V[i].y}, self.thickness, self.color)
+    self.glines = self.glines:append(am.group{hline, vline})
+  end
+  self.node = self.glines
 end
 
 return M

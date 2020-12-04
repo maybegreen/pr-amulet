@@ -2,7 +2,7 @@ local w = require "graphics"
 local map = {
   data = {},
   ts = 16, --tile size
-  nodes = am.translate(0, 0) ^ am.scale(1):tag"zoom"
+  node = am.translate(0, 0) ^ am.scale(1):tag"zoom"
 }
 local t = w.tiles
 map.sym = {
@@ -16,7 +16,7 @@ map.sym = {
      if t == k then
        for y = -w.height, w.height, 16 do
          for x = -w.width, w.width, 16 do
-           self.nodes:append(am.translate(vec2(x, y)) ^ v)
+           self.node:append(am.translate(vec2(x, y)) ^ v)
          end
        end
      end
@@ -32,7 +32,7 @@ function map:make(path)
     for w in string.gmatch(s, "(%a+)") do
       for k, v in pairs(map.sym) do
         if w == k then
-          self.nodes:append(am.translate(vec2(x, y)) ^ v)
+          self.node:append(am.translate(vec2(x, y)) ^ v)
         end
       end
       x = x + 16
