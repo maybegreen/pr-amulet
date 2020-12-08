@@ -1,8 +1,8 @@
 # Amulet-Project-Template
 
-* Contains:
+Contains:
 
 + the amulet-minor-mode for emacs
-+ Template code for a little rpg
++ Template code for a Rogue-like
 
-/unfinished !/
+*unfinished !*
